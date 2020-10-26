@@ -121,19 +121,19 @@ always @(posedge CLK12M or negedge nrst) begin
 end
 
 wire [7:0] foo [0:15];
-assign foo[0]  = "A";
-assign foo[1]  = "R";
-assign foo[2]  = "R";
-assign foo[3]  = "O";
-assign foo[4]  = "W";
+assign foo[0]  = "T";
+assign foo[1]  = "E";
+assign foo[2]  = "S";
+assign foo[3]  = "T";
+assign foo[4]  = " ";
 assign foo[5]  = " ";
 assign foo[6]  = " ";
 assign foo[7]  = " ";
-assign foo[8]  = "A";
-assign foo[9]  = "R";
-assign foo[10] = "R";
-assign foo[11] = "O";
-assign foo[12] = "W";
+assign foo[8]  = "I";
+assign foo[9]  = "O";
+assign foo[10] = "A";
+assign foo[11] = "N";
+assign foo[12] = " ";
 assign foo[13] = " ";
 assign foo[14] = " ";
 assign foo[15] = " ";

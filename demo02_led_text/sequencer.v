@@ -55,73 +55,24 @@ always @(posedge clk_in or negedge nrst)
 			
 			STATE_Whoami_Wait: begin
 				if (spi_ready) begin
-					state <= STATE_Init;
+					state <= STATE_Init1;
 					led_out <= spi_miso_data[7:0];
 				end 
 				spi_request <= 1'b0;
 			end
 			
-			// 2. Write ODR in CTRL_REG1 (Addr 0x20)
-			STATE_Init: begin
-				state <= STATE_Init_Wait;
-				
-				spi_request <= 1'b1;
-				spi_nbits <= 6'd15;
-				spi_mosi_data <= 31'b00100000_01110111;
-			end
-			
-			STATE_Init_Wait: begin
-				if (spi_ready) begin
-					state <= STATE_Init1;
-				end 
-				spi_request <= 1'b0;
-			end
-			
-			// 3. Enable temperature sensor (Addr 0x1F)
+			// 2. Set POWER_CTL (Addr 0x2D)
 			STATE_Init1: begin
 				state <= STATE_Init1_Wait;
 				
 				spi_request <= 1'b1;
-				spi_nbits <= 6'd15;
-				spi_mosi_data <= 31'b00011111_11000000;
+				spi_nbits <= 6'd23;
+				spi_mosi_data <= 31'b00001010_00101101_00000010;
 			end
 			
 			STATE_Init1_Wait: begin
 				if (spi_ready) begin
-					state <= STATE_Init2;
-				end 
-				spi_request <= 1'b0;
-			end
-			
-			// 4. Enable BDU, High resolution (Addr 0x23)
-			STATE_Init2: begin
-				state <= STATE_Init2_Wait;
-				
-				spi_request <= 1'b1;
-				spi_nbits <= 6'd15;
-				spi_mosi_data <= 31'b00100011_10001000;
-			end
-			
-			STATE_Init2_Wait: begin
-				if (spi_ready) begin
-					state <= STATE_Read;
-				end 
-				spi_request <= 1'b0;
-			end
-			
-			// 5. Read OUT_X_H (Addr 0x29)
-			STATE_Read: begin
-				state <= STATE_Read_Wait;
-				
-				spi_request <= 1'b1;
-				spi_nbits <= 6'd23;
-				spi_mosi_data <= 31'b11101000_00000000_00000000;
-			end
-			
-			STATE_Read_Wait: begin
-				if (spi_ready) begin
 					state <= STATE_Compare;
-					saved_acc <= spi_miso_data[7:0];
 				end 
 				spi_request <= 1'b0;
 			end
