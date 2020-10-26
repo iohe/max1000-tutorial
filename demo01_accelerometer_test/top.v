@@ -19,7 +19,9 @@ wire [31:0] spi_miso_data;
 wire [5:0] spi_nbits;
 wire spi_request;
 wire spi_ready;
+wire clock1M;
 
+ 
 sequencer U1 (
 	.clk_in(CLK12M),
 	.nrst(nrst),
